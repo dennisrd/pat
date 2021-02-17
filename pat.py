@@ -153,7 +153,6 @@ class TestPattern(unittest.TestCase):
         Param(x=int, y=str)
 
     def test1(self):
-        #x = Param(x=int)
         e = Pattern({'kind': 'Command',
                      'method': 'Inc',
                      'arg': Param(i=int)
@@ -175,7 +174,6 @@ class TestPattern(unittest.TestCase):
         s = Pattern(Param(x=int))
         s_match = s.match(3)
         self.assertEqual(s_match['x'], 3)
-        #print(s.match('3'))
 
     def test3(self):
         d = Pattern({'aap': Param(y=int)})
