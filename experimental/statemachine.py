@@ -1,7 +1,7 @@
 """State machines with reflective features."""
 
 
-from .pat2 import Var, Pattern
+from pat2 import Var, Pattern
 import types
 from functools import partial
 from inspect import signature
