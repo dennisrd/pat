@@ -6,21 +6,18 @@ class Var:
 
     def __init__(self, typ=object):
         self.typ = typ
-
-    # Making it a descriptor does not work, since it is not a class attribute.
-    # def __get__(self, instance, owner):
-    #     print(f'__get__({self}, {instance}, {owner})')
-    #     bindings = instance.var_bindings
-    #     if self in bindings:
-    #         return bindings[self]
-    #     return self
+        self.name = None
 
     def __repr__(self):
-        return f'{self.__class__}({self.typ})'
+        if self.name is None:
+            return f'{self.__class__}({self.typ})'
+        return f'{self.__class__}({self.name}:{self.typ})'
 
     def __str__(self):
-        return f'{self.__class__.__name__}({self.typ.__name__})'
-        #return f'{self.__class__}({self.typ})'
+        if self.name is None:
+            return f'{self.__class__.__name__}({self.typ.__name__})'
+        return f'{self.__class__.__name__}({self.name}:{self.typ.__name__})'
+        #return f'{m.__class__}({self.typ})'
 
     def __gt__(self, other):
         return BinaryExpr('>', self, other)

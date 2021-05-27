@@ -3,16 +3,34 @@ import unittest
 
 class Var:
     """A placeholder for a value of the specified type."""
-    typ: type
 
     def __init__(self, typ=object):
         self.typ = typ
+
+    # Making it a descriptor does not work, since it is not a class attribute.
+    # def __get__(self, instance, owner):
+    #     print(f'__get__({self}, {instance}, {owner})')
+    #     bindings = instance.var_bindings
+    #     if self in bindings:
+    #         return bindings[self]
+    #     return self
 
     def __repr__(self):
         return f'{self.__class__}({self.typ})'
 
     def __str__(self):
         return f'{self.__class__.__name__}({self.typ.__name__})'
+        #return f'{self.__class__}({self.typ})'
+
+    def __gt__(self, other):
+        return BinaryExpr('>', self, other)
+
+    def __eq__(self, other):
+        return BinaryExpr('==', self, other)
+
+    # https://docs.python.org/3/reference/datamodel.html#object.__hash__
+    def __hash__(self):
+        return id(self)
 
     def subst(self, bindings):
         if self in bindings and isinstance(bindings[self], self.typ):
@@ -28,6 +46,22 @@ class Var:
             return
         else:
             raise MatchException
+
+
+class BinaryExpr:
+    """Binary expression"""
+    operator: str
+    left: object
+    right: object
+
+    def __init__(self, op, left, right):
+        self.operator = op
+        self.left = left
+        self.right = right
+
+    def __and__(self, other):
+        return BinaryExpr('&', self, other)
+
 
 
 class MatchException(Exception):
