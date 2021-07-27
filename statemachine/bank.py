@@ -31,7 +31,6 @@ class Acc(StateMachine):
             t.condition = (t.y == x) & (m.state.total < 100)
             def update():
                 m.state.total += t.a
-                //ReadyCompleted(m.state.task_id).activate()
             t.update = update  # wish Python had general lambdas
             t.response = []  # no response event
         with Transition(m, 'reset', m.A1, m.A1) as t:
