@@ -22,6 +22,9 @@ class Var:
     def __gt__(self, other):
         return BinaryExpr('>', self, other)
 
+    def __lt__(self, other):
+        return BinaryExpr('<', self, other)
+
     def __eq__(self, other):
         return BinaryExpr('==', self, other)
 
